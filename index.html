@@ -67,11 +67,21 @@
     }
 
     .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px;
+      font-size: 18px;
       letter-spacing: 0.08em;
       color: var(--white);
       text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      object-fit: cover;
     }
 
     .nav-logo .highlight { color: var(--cyan); }
@@ -686,7 +696,10 @@
 
   <!-- NAV -->
   <nav id="nav">
-    <div class="nav-logo">LEGACY <span class="highlight">CUTS</span></div>
+    <a href="#" class="nav-logo">
+      <img src="images/logo.jpg" alt="Legacy Barbershop">
+      <span>LEGACY <span class="highlight">CUTS</span></span>
+    </a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#portfolio">Work</a></li>

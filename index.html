@@ -3,27 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legacy Barbershop - Premium Cuts in Santa Ana</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Legacy Barbershop - Premium Cuts Santa Ana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #1C1917;
+      --on-primary: #FFFFFF;
+      --secondary: #44403C;
+      --accent: #A16207;
+      --background: #FAFAF9;
+      --foreground: #0C0A09;
+      --muted: #E8ECF0;
+      --border: #D6D3D1;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #0F172A;
-      --on-primary: #FFFFFF;
-      --secondary: #334155;
-      --accent: #0369A1;
-      --background: #F8FAFC;
-      --foreground: #020617;
-      --muted: #E8ECF1;
-      --border: #E2E8F0;
-      --destructive: #DC2626;
     }
 
     html {
@@ -31,12 +28,10 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Work Sans', sans-serif;
+      background: var(--background);
       color: var(--foreground);
-      background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
       line-height: 1.6;
-      overflow-x: hidden;
-      min-height: 100vh;
     }
 
     /* Navigation */
@@ -45,23 +40,23 @@
       top: 0;
       left: 0;
       right: 0;
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid var(--border);
       padding: 1.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 1000;
+      transition: all 0.3s ease;
     }
 
     .logo {
-      width: 50px;
-      height: 50px;
-      border-radius: 8px;
+      width: 48px;
+      height: 48px;
+      border-radius: 4px;
       overflow: hidden;
       border: 2px solid var(--accent);
-      backdrop-filter: blur(20px);
     }
 
     .logo img {
@@ -71,125 +66,82 @@
     }
 
     nav a {
-      color: var(--on-primary);
+      color: var(--foreground);
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
       margin-left: 2.5rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.3s ease;
       cursor: pointer;
     }
 
     nav a:hover {
       color: var(--accent);
-      transform: translateY(-1px);
     }
 
-    nav .cta {
-      background: linear-gradient(135deg, var(--accent), #0284C7);
-      color: var(--on-primary);
-      padding: 0.8rem 1.8rem;
-      border-radius: 6px;
+    nav button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
       font-weight: 600;
       margin-left: 2.5rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: none;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(3, 105, 161, 0.3);
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
     }
 
-    nav .cta:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(3, 105, 161, 0.5);
+    nav button:hover {
+      background: #8B5A00;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(161, 98, 7, 0.2);
     }
 
     /* Hero Section */
     .hero {
       margin-top: 70px;
-      height: 700px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(30, 41, 59, 0.8) 100%);
-      position: relative;
-      overflow: hidden;
+      height: 720px;
+      background: linear-gradient(135deg, var(--primary) 0%, #2D2420 100%);
+      color: var(--on-primary);
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(3, 105, 161, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(3, 105, 161, 0.05) 0%, transparent 50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(161, 98, 7, 0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       pointer-events: none;
-      animation: drift 6s ease-in-out infinite;
+      animation: float 6s ease-in-out infinite;
     }
 
-    @keyframes drift {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(20px, 20px); }
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -60%) scale(1.05); }
     }
 
     .hero-content {
       position: relative;
-      z-index: 10;
-      text-align: center;
-      color: var(--on-primary);
-      max-width: 800px;
-      padding: 2rem;
-    }
-
-    .hero h1 {
-      font-size: 5.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      background: linear-gradient(135deg, var(--on-primary) 0%, #CBD5E1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .hero p {
-      font-size: 1.4rem;
-      color: #CBD5E1;
-      font-weight: 300;
-      margin-bottom: 2.5rem;
-      letter-spacing: 1px;
-      animation: fadeInUp 1s ease-out 0.2s both;
-    }
-
-    .cta-button {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent), #0284C7);
-      color: var(--on-primary);
-      padding: 1.2rem 3rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 8px 25px rgba(3, 105, 161, 0.4);
-      animation: fadeInUp 1s ease-out 0.4s both;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 35px rgba(3, 105, 161, 0.6);
+      z-index: 1;
+      max-width: 900px;
+      animation: fadeInUp 0.8s ease-out;
     }
 
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
       }
       to {
         opacity: 1;
@@ -197,73 +149,122 @@
       }
     }
 
-    /* Services Section */
-    .services {
-      padding: 7rem 2rem;
-      background: linear-gradient(180deg, #F8FAFC 0%, #E8ECF1 100%);
-      position: relative;
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 5.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
     }
 
-    .section-title {
-      font-size: 3.5rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      text-align: center;
+    .hero p {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .cta-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 1.2rem 3.2rem;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 32px rgba(161, 98, 7, 0.3);
+      text-decoration: none;
+    }
+
+    .cta-primary:hover {
+      background: #8B5A00;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(161, 98, 7, 0.4);
+    }
+
+    /* Sections */
+    section {
+      padding: 7rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.2rem;
       font-weight: 700;
-      letter-spacing: -1px;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.5px;
     }
 
     .section-subtitle {
-      text-align: center;
       color: var(--secondary);
-      margin-bottom: 4.5rem;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
+      margin-bottom: 4rem;
       font-weight: 300;
+    }
+
+    /* Services */
+    .services {
+      background: var(--background);
     }
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2.5rem;
-      max-width: 1300px;
-      margin: 0 auto;
     }
 
     .service-card {
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      padding: 2.5rem;
-      border-radius: 12px;
-      border: 1px solid rgba(3, 105, 161, 0.2);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: center;
+      background: white;
+      padding: 3rem 2.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .service-card:hover {
       border-color: var(--accent);
-      transform: translateY(-10px);
-      box-shadow: 0 20px 50px rgba(3, 105, 161, 0.2);
-      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
     }
 
     .service-icon {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, var(--accent), #0284C7);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-      font-size: 1.8rem;
-      box-shadow: 0 8px 20px rgba(3, 105, 161, 0.3);
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
     }
 
     .service-card h3 {
-      font-size: 1.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
       margin-bottom: 1rem;
       color: var(--primary);
-      font-weight: 600;
     }
 
     .service-card p {
@@ -272,59 +273,47 @@
       line-height: 1.7;
     }
 
-    /* Portfolio Section */
+    /* Portfolio */
     .portfolio {
-      padding: 7rem 2rem;
-      background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
-    }
-
-    .portfolio .section-title,
-    .portfolio .section-subtitle {
-      color: var(--on-primary);
-    }
-
-    .portfolio .section-subtitle {
-      color: #CBD5E1;
+      background: white;
     }
 
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      max-width: 1300px;
-      margin: 0 auto;
     }
 
     .portfolio-item {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 4px;
       aspect-ratio: 1;
-      background: linear-gradient(135deg, rgba(3, 105, 161, 0.2), rgba(3, 105, 161, 0.1));
-      border: 1px solid rgba(3, 105, 161, 0.3);
+      background: var(--muted);
+      border: 1px solid var(--border);
     }
 
     .portfolio-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .portfolio-item:hover img {
-      transform: scale(1.1) rotate(1deg);
+      transform: scale(1.1);
     }
 
     .portfolio-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(3, 105, 161, 0.95), rgba(2, 132, 199, 0.95));
-      backdrop-filter: blur(5px);
+      background: linear-gradient(135deg, rgba(28, 25, 23, 0.95), rgba(68, 64, 60, 0.95));
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
-      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: opacity 0.5s ease;
     }
 
     .portfolio-item:hover .portfolio-overlay {
@@ -333,181 +322,159 @@
 
     .portfolio-overlay p {
       color: var(--on-primary);
+      font-family: 'Outfit', sans-serif;
       font-weight: 600;
-      text-align: center;
       font-size: 1.3rem;
       letter-spacing: 0.5px;
     }
 
-    /* About Section */
+    /* About */
     .about {
-      padding: 7rem 2rem;
-      background: linear-gradient(180deg, #F8FAFC 0%, #E8ECF1 100%);
-    }
-
-    .about-content {
-      max-width: 900px;
-      margin: 0 auto;
+      background: var(--primary);
+      color: var(--on-primary);
       text-align: center;
     }
 
-    .about h2 {
-      font-size: 3.5rem;
-      margin-bottom: 2.5rem;
-      color: var(--primary);
-      font-weight: 700;
-      letter-spacing: -1px;
-    }
-
-    .about p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: var(--secondary);
-      margin-bottom: 1.5rem;
-    }
-
-    .legacy-quote {
-      font-style: italic;
-      color: var(--accent);
-      font-size: 1.35rem;
-      margin-top: 2.5rem;
-      padding: 2.5rem;
-      border-left: 4px solid var(--accent);
-      background: rgba(3, 105, 161, 0.05);
-      border-radius: 8px;
-    }
-
-    /* Contact Section */
-    .contact {
-      padding: 7rem 2rem;
-      background: linear-gradient(135deg, var(--primary) 0%, #1E293B 100%);
-    }
-
-    .contact .section-title,
-    .contact .section-subtitle {
+    .about h2,
+    .about .section-subtitle {
       color: var(--on-primary);
     }
 
-    .contact .section-subtitle {
-      color: #CBD5E1;
+    .about .section-subtitle {
+      color: #C4B5A0;
+    }
+
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .about p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: #E8E0D8;
+    }
+
+    .about-quote {
+      margin-top: 2.5rem;
+      padding: 2.5rem;
+      border-left: 3px solid var(--accent);
+      background: rgba(161, 98, 7, 0.1);
+      border-radius: 2px;
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.25rem;
+      font-weight: 300;
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--background);
     }
 
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
     }
 
     .contact-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(20px);
+      background: white;
       padding: 2.5rem;
-      border-radius: 12px;
-      border: 1px solid rgba(3, 105, 161, 0.3);
+      border-radius: 4px;
+      border: 1px solid var(--border);
       text-align: center;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .contact-card:hover {
       border-color: var(--accent);
-      background: rgba(3, 105, 161, 0.1);
-      transform: translateY(-8px);
-      box-shadow: 0 15px 40px rgba(3, 105, 161, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(161, 98, 7, 0.15);
     }
 
     .contact-card h3 {
-      color: var(--on-primary);
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
       font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: var(--primary);
     }
 
     .contact-card p {
-      color: #CBD5E1;
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
+      color: var(--secondary);
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
     }
 
     .contact-card a {
       color: var(--accent);
       text-decoration: none;
       font-weight: 600;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       font-size: 0.95rem;
     }
 
     .contact-card a:hover {
-      color: #0284C7;
+      color: #8B5A00;
       transform: translateX(4px);
     }
 
     /* Footer */
     footer {
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 1) 100%);
-      color: var(--on-primary);
-      padding: 3.5rem 2rem;
+      background: var(--primary);
+      color: #C4B5A0;
       text-align: center;
-      border-top: 1px solid rgba(3, 105, 161, 0.3);
+      padding: 3.5rem 2rem;
+      border-top: 1px solid rgba(161, 98, 7, 0.2);
     }
 
     footer p {
-      color: #CBD5E1;
       margin-bottom: 0.5rem;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     footer a {
       color: var(--accent);
       text-decoration: none;
-      margin: 0 0.8rem;
-      transition: color 0.3s;
-      font-weight: 500;
+      transition: color 0.3s ease;
+      margin: 0 0.5rem;
     }
 
     footer a:hover {
-      color: #0284C7;
+      color: #DCAD3C;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 3rem;
+        font-size: 2.8rem;
       }
 
-      .section-title {
-        font-size: 2.2rem;
+      h2 {
+        font-size: 2rem;
       }
 
       nav a {
         display: none;
       }
 
-      nav .cta {
-        margin-left: 1.5rem;
+      nav button {
         padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        margin-left: 1rem;
       }
 
       .hero {
         height: 500px;
-        margin-top: 70px;
       }
 
-      .about h2 {
-        font-size: 2.2rem;
-      }
-
-      .services,
-      .portfolio,
-      .about,
-      .contact {
-        padding: 4rem 2rem;
+      section {
+        padding: 4rem 1.5rem;
       }
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       * {
         animation-duration: 0.01ms !important;
@@ -518,108 +485,97 @@
   </style>
 </head>
 <body>
-  <!-- Navigation -->
   <nav>
     <div class="logo">
       <img src="images/logo.jpg" alt="Legacy Barbershop Logo">
     </div>
-    <div>
+    <div style="display: flex; align-items: center;">
       <a href="#services">Services</a>
       <a href="#portfolio">Portfolio</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <button class="cta">Book Now</button>
+      <button onclick="document.querySelector('#contact').scrollIntoView({behavior: 'smooth'})">Book Now</button>
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1>Legacy</h1>
       <p>Premium Craft Barbering</p>
-      <a href="#contact" class="cta-button">Reserve Your Seat</a>
+      <button class="cta-primary" onclick="document.querySelector('#contact').scrollIntoView({behavior: 'smooth'})">Reserve Your Seat</button>
     </div>
   </section>
 
-  <!-- Services Section -->
   <section class="services" id="services">
-    <h2 class="section-title">Our Services</h2>
-    <p class="section-subtitle">Expertly crafted cuts for every style</p>
+    <h2>Our Services</h2>
+    <p class="section-subtitle">Expertly crafted cuts and experiences</p>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">✂️</div>
         <h3>Classic Fade</h3>
-        <p>Precision fades with clean lines. Modern cuts that define the craft.</p>
+        <p>Precision fades with sharp lines. Modern cuts that define the craft of barbering.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">💈</div>
         <h3>Hot Shave</h3>
-        <p>Traditional straight razor shaves. The ultimate barber experience.</p>
+        <p>Traditional straight razor shaves. The ultimate luxury barbering experience.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">🎯</div>
         <h3>Custom Design</h3>
-        <p>Bespoke line designs and patterns. Your vision, our blade.</p>
+        <p>Bespoke line designs and patterns. Turn your vision into blade work.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">👨</div>
-        <h3>Beard Work</h3>
-        <p>Full beard grooming and sculpting. Sharp lines, distinguished look.</p>
+        <h3>Beard Sculpting</h3>
+        <p>Full beard grooming and shaping. Sharp, distinguished, impeccable.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">💇</div>
         <h3>Color Service</h3>
-        <p>Professional color and highlights. Premium results guaranteed.</p>
+        <p>Professional color and highlights. Premium results, every time.</p>
       </div>
       <div class="service-card">
         <div class="service-icon">🌟</div>
         <h3>VIP Session</h3>
-        <p>Private appointment. Undivided attention. Luxury service level.</p>
+        <p>Private appointment. Undivided attention. Luxury-level service.</p>
       </div>
     </div>
   </section>
 
-  <!-- Portfolio Section -->
   <section class="portfolio" id="portfolio">
-    <h2 class="section-title">Our Work</h2>
+    <h2>Our Work</h2>
     <p class="section-subtitle">Precision cuts that speak for themselves</p>
     <div class="portfolio-grid">
       <div class="portfolio-item">
         <img src="images/cut-1.jpg" alt="Fresh fade cut">
-        <div class="portfolio-overlay">
-          <p>Fresh Fade</p>
-        </div>
+        <div class="portfolio-overlay"><p>Fresh Fade</p></div>
       </div>
       <div class="portfolio-item">
         <img src="images/cut-2.jpg" alt="Premium barber cut">
-        <div class="portfolio-overlay">
-          <p>Premium Cut</p>
-        </div>
+        <div class="portfolio-overlay"><p>Premium Cut</p></div>
       </div>
       <div class="portfolio-item">
-        <img src="images/cut-3.jpg" alt="Expert haircut design">
-        <div class="portfolio-overlay">
-          <p>Expert Design</p>
-        </div>
+        <img src="images/cut-3.jpg" alt="Expert haircut">
+        <div class="portfolio-overlay"><p>Expert Design</p></div>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="about">
+  <section class="about" id="about">
     <div class="about-content">
       <h2>Built on Legacy</h2>
-      <p>Legacy Barbershop honors traditional barbering while embracing modern aesthetics. Every cut is executed with precision, every shave delivered with care.</p>
+      <p>Legacy Barbershop honors the tradition of fine barbering while embracing contemporary style. Every cut is executed with precision. Every client leaves looking sharp.</p>
       <p>We don't just cut hair. We craft experiences.</p>
-      <div class="legacy-quote">
+      <div class="about-quote">
         "Excellence isn't an act, it's a habit. We make quality our standard."
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section class="contact" id="contact">
-    <h2 class="section-title">Book Your Cut</h2>
-    <p class="section-subtitle">Get in touch with our team</p>
+    <h2>Get In Touch</h2>
+    <p class="section-subtitle">Book your appointment today</p>
     <div class="contact-grid">
       <div class="contact-card">
         <h3>📞 Call</h3>
@@ -632,40 +588,20 @@
         <a href="https://maps.google.com" target="_blank">Get Directions</a>
       </div>
       <div class="contact-card">
-        <h3>📱 Follow</h3>
+        <h3>📱 Instagram</h3>
         <p>Latest work & updates</p>
         <a href="https://instagram.com/legacybarbershopsantaana" target="_blank">@legacybarbershopsantaana</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <p>Legacy Barbershop © 2026</p>
-    <p>Santa Ana, California — Premium Craft Barbering</p>
+    <p>Legacy Barbershop © 2026 • Santa Ana, California</p>
+    <p>Premium Craft Barbering</p>
     <p>
-      <a href="https://instagram.com/legacybarbershopsantaana" target="_blank">Instagram</a> •
+      <a href="https://instagram.com/legacybarbershopsantaana">Instagram</a> •
       <a href="tel:+17143768318">Phone</a>
     </p>
   </footer>
-
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-
-    document.querySelector('nav .cta').addEventListener('click', function() {
-      const contact = document.querySelector('#contact');
-      if (contact) {
-        contact.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  </script>
 </body>
 </html>

@@ -4,293 +4,395 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Legacy Barbershop - Premium Cuts Santa Ana</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1E90FF;
-      --on-primary: #FFFFFF;
-      --secondary: #4A90E2;
-      --accent: #00D4FF;
-      --background: #FAFAF9;
-      --foreground: #0C1A40;
-      --muted: #E8ECF0;
-      --border: #D6D3D1;
+      --bg: #0A0E1A;
+      --bg-2: #121829;
+      --bg-3: #1A1F2E;
+      --surface: rgba(30,144,255,0.08);
+      --surface-hover: rgba(30,144,255,0.12);
+      --blue: #1E90FF;
+      --blue-dim: rgba(30,144,255,0.12);
+      --blue-dim2: rgba(30,144,255,0.06);
+      --cyan: #00D4FF;
+      --white: #FFFFFF;
+      --text: rgba(255,255,255,0.92);
+      --text-muted: rgba(255,255,255,0.55);
+      --text-dim: rgba(255,255,255,0.35);
+      --border: rgba(30,144,255,0.15);
+      --smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Work Sans', sans-serif;
-      background: var(--background);
-      color: var(--foreground);
-      line-height: 1.6;
+      font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Navigation */
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* Nav */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 2rem;
+      top: 0; left: 0; right: 0;
+      z-index: 1001;
+      padding: 20px 40px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      transition: all 0.3s ease;
+      transition: all 0.3s var(--smooth);
     }
 
-    .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 4px;
-      overflow: hidden;
-      border: 2px solid var(--accent);
+    nav.scrolled {
+      padding: 14px 40px;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    nav a {
-      color: var(--foreground);
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      color: var(--white);
       text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      margin-left: 2.5rem;
-      transition: color 0.3s ease;
-      cursor: pointer;
     }
 
-    nav a:hover {
-      color: var(--accent);
-    }
+    .nav-logo .highlight { color: var(--cyan); }
 
-    nav button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 0.75rem 1.8rem;
-      border-radius: 2px;
-      font-weight: 600;
-      margin-left: 2.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    nav button:hover {
-      background: #0099FF;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(30, 144, 255, 0.3);
-    }
-
-    /* Hero Section */
-    .hero {
-      margin-top: 70px;
-      height: 720px;
-      background: linear-gradient(135deg, var(--primary) 0%, #0066CC 100%);
-      color: var(--on-primary);
+    .nav-links {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      text-align: left;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      background: var(--cyan);
+      color: var(--bg) !important;
+      padding: 9px 20px;
+      border-radius: 2px;
+      font-weight: 600 !important;
+      letter-spacing: 0.06em !important;
+      transition: all 0.2s !important;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .nav-cta:hover {
+      background: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 40px 100px;
       position: relative;
       overflow: hidden;
-      padding: 2rem;
-      padding-left: 8rem;
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-      top: 50%;
-      right: -100px;
-      transform: translateY(-50%);
-      pointer-events: none;
-      animation: float 6s ease-in-out infinite;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(30,144,255,0.1) 0%, transparent 50%), linear-gradient(180deg, transparent 0%, var(--bg) 100%);
+      z-index: 0;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -60%) scale(1.05); }
-    }
-
-    .hero-content {
+    .hero-eyebrow {
       position: relative;
-      z-index: 1;
-      max-width: 900px;
-      animation: fadeInUp 0.8s ease-out;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .hero-eyebrow-line {
+      width: 40px;
+      height: 2px;
+      background: var(--cyan);
     }
 
-    .hero h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 5.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      letter-spacing: -1.5px;
-      line-height: 1.1;
-    }
-
-    .hero p {
-      font-size: 1.4rem;
-      color: var(--accent);
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-      letter-spacing: 1px;
-    }
-
-    .cta-primary {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: 1.2rem 3.2rem;
-      border: none;
-      border-radius: 2px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 1rem;
+    .hero-eyebrow-text {
+      font-size: 11px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 12px 32px rgba(161, 98, 7, 0.3);
-      text-decoration: none;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
     }
 
-    .cta-primary:hover {
-      background: #0099FF;
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(30, 144, 255, 0.4);
+    .hero-title {
+      position: relative;
+      z-index: 2;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 12vw, 140px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 24px;
     }
 
-    /* Sections */
-    section {
-      padding: 7rem 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+    .hero-title .blue { color: var(--blue); }
 
-    h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 3.2rem;
-      font-weight: 700;
-      margin-bottom: 1.2rem;
-      letter-spacing: -0.5px;
-    }
-
-    .section-subtitle {
-      color: var(--secondary);
-      font-size: 1.15rem;
-      margin-bottom: 4rem;
+    .hero-sub {
+      position: relative;
+      z-index: 2;
+      font-size: 16px;
       font-weight: 300;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cyan);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 2px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s var(--smooth);
+    }
+
+    .btn-primary:hover {
+      background: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30,144,255,0.3);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 24px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: all 0.25s var(--smooth);
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--cyan);
+      background: rgba(0,212,255,0.05);
+      color: var(--cyan);
+    }
+
+    /* Ticker */
+    .ticker {
+      background: var(--blue);
+      padding: 12px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      animation: ticker 20s linear infinite;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 32px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      color: var(--bg);
+      font-weight: 600;
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Section styles */
+    section { padding: 80px 40px; }
+
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-eyebrow-line {
+      width: 32px;
+      height: 2px;
+      background: var(--cyan);
+    }
+
+    .section-eyebrow-text {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 7vw, 80px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
     }
 
     /* Services */
     .services {
-      background: var(--background);
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 48px;
     }
 
     .service-card {
-      background: white;
-      padding: 3rem 2.5rem;
-      border-radius: 4px;
+      background: var(--bg-3);
+      padding: 40px 32px;
       border: 1px solid var(--border);
-      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       overflow: hidden;
+      transition: all 0.35s var(--smooth);
     }
 
     .service-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0;
+      width: 100%;
       height: 3px;
-      background: var(--accent);
+      background: var(--cyan);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.4s var(--smooth);
     }
 
     .service-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-8px);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+      background: var(--bg-2);
+      border-color: rgba(0,212,255,0.3);
     }
 
-    .service-card:hover::before {
-      transform: scaleX(1);
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 12px;
     }
 
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
-    .service-card h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--primary);
+    .service-number {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      line-height: 1;
+      color: rgba(0,212,255,0.04);
+      letter-spacing: 0;
+      transition: color 0.35s;
     }
 
-    .service-card p {
-      color: var(--secondary);
-      font-size: 0.95rem;
-      line-height: 1.7;
+    .service-card:hover .service-number {
+      color: rgba(0,212,255,0.08);
     }
 
     /* Portfolio */
     .portfolio {
-      background: white;
+      background: var(--bg);
     }
 
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
     }
 
     .portfolio-item {
       position: relative;
       overflow: hidden;
-      border-radius: 4px;
       aspect-ratio: 1;
-      background: var(--muted);
+      background: var(--bg-3);
       border: 1px solid var(--border);
     }
 
@@ -298,23 +400,23 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.5s var(--smooth);
     }
 
     .portfolio-item:hover img {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .portfolio-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(30, 144, 255, 0.95), rgba(0, 102, 204, 0.95));
+      background: linear-gradient(135deg, rgba(30,144,255,0.85), rgba(0,100,204,0.85));
       backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.4s ease;
     }
 
     .portfolio-item:hover .portfolio-overlay {
@@ -322,231 +424,372 @@
     }
 
     .portfolio-overlay p {
-      color: var(--on-primary);
-      font-family: 'Outfit', sans-serif;
+      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif;
       font-weight: 600;
-      font-size: 1.3rem;
-      letter-spacing: 0.5px;
+      font-size: 18px;
+      letter-spacing: 0.04em;
     }
 
     /* About */
     .about {
-      background: var(--primary);
-      color: var(--on-primary);
-      text-align: center;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-    .about h2,
-    .about .section-subtitle {
-      color: var(--on-primary);
-    }
-
-    .about .section-subtitle {
-      color: #B0D4FF;
-    }
-
-    .about-content {
-      max-width: 800px;
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .about p {
-      font-size: 1.05rem;
+    .about-left .section-title { margin-bottom: 32px; }
+
+    .about-body {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
       line-height: 1.8;
-      margin-bottom: 1.5rem;
-      color: #E0ECFF;
+      margin-bottom: 20px;
     }
 
-    .about-quote {
-      margin-top: 2.5rem;
-      padding: 2.5rem;
-      border-left: 3px solid var(--accent);
-      background: rgba(0, 212, 255, 0.1);
-      border-radius: 2px;
+    .about-highlight {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--cyan);
       font-style: italic;
-      color: var(--accent);
-      font-size: 1.25rem;
-      font-weight: 300;
+    }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border-radius: 2px;
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      line-height: 1;
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .stat-label strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
     }
 
     /* Contact */
     .contact {
-      background: var(--background);
+      background: var(--bg);
     }
 
-    .contact-grid {
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
     }
 
-    .contact-card {
-      background: white;
-      padding: 2.5rem;
-      border-radius: 4px;
+    .contact-details { display: flex; flex-direction: column; gap: 32px; }
+
+    .contact-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .contact-item-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--blue-dim);
       border: 1px solid var(--border);
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--cyan);
     }
 
-    .contact-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(30, 144, 255, 0.2);
-    }
-
-    .contact-card h3 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
+    .contact-item-label {
+      font-size: 10px;
       font-weight: 600;
-      margin-bottom: 0.8rem;
-      color: var(--primary);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
     }
 
-    .contact-card p {
-      color: var(--secondary);
-      margin-bottom: 1.2rem;
-      font-size: 0.9rem;
-    }
-
-    .contact-card a {
-      color: var(--accent);
+    .contact-item-value {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
       text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
+      transition: color 0.2s;
     }
 
-    .contact-card a:hover {
-      color: #0099FF;
-      transform: translateX(4px);
+    a.contact-item-value:hover { color: var(--cyan); }
+
+    .contact-map {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .map-placeholder { text-align: center; padding: 40px; }
+
+    .map-placeholder-icon { color: var(--cyan); margin-bottom: 16px; }
+
+    .map-address {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .map-city {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue-dim);
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .map-link:hover {
+      background: rgba(0,212,255,0.1);
+      border-color: var(--cyan);
     }
 
     /* Footer */
     footer {
-      background: var(--primary);
-      color: #B0D4FF;
-      text-align: center;
-      padding: 3.5rem 2rem;
-      border-top: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
-    footer p {
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      color: var(--white);
     }
 
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.3s ease;
-      margin: 0 0.5rem;
-    }
+    .footer-logo .highlight { color: var(--cyan); }
 
-    footer a:hover {
-      color: #00D4FF;
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
     }
 
     /* Responsive */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-inner { gap: 48px; }
+      .contact-inner { gap: 48px; }
+    }
+
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.8rem;
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+      .nav-cta { padding: 8px 16px; font-size: 11px; }
+
+      .hero { padding: 0 24px 80px; }
+      .hero-title { font-size: clamp(48px, 14vw, 80px); }
+
+      section { padding: 60px 24px; }
+
+      .services-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
       }
 
-      h2 {
-        font-size: 2rem;
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
       }
 
-      nav a {
-        display: none;
-      }
-
-      nav button {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.8rem;
-        margin-left: 1rem;
-      }
-
-      .hero {
-        height: 500px;
-      }
-
-      section {
-        padding: 4rem 1.5rem;
+      footer {
+        padding: 32px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      * {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="logo">
-      <img src="images/logo.jpg" alt="Legacy Barbershop Logo">
-    </div>
-    <div style="display: flex; align-items: center;">
-      <a href="#services">Services</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <button onclick="document.querySelector('#contact').scrollIntoView({behavior: 'smooth'})">Book Now</button>
-    </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">LEGACY <span class="highlight">CUTS</span></div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="tel:+17143768318" class="nav-cta">Book Now</a></li>
+    </ul>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
-      <h1>Legacy</h1>
-      <p>Premium Craft Barbering</p>
-      <button class="cta-primary" onclick="document.querySelector('#contact').scrollIntoView({behavior: 'smooth'})">Reserve Your Seat</button>
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="hero-eyebrow-text">Santa Ana, CA</span>
+    </div>
+
+    <h1 class="hero-title">
+      CRAFT<br>
+      THAT<br>
+      <span class="blue">CUTS</span>
+    </h1>
+
+    <p class="hero-sub">
+      Premium barbering done right. Sharp lines, perfect fades, and a vibe that's unmatched.
+    </p>
+
+    <div class="hero-actions">
+      <a href="tel:+17143768318" class="btn-primary">Book Now</a>
+      <a href="#services" class="btn-ghost">Explore Services</a>
     </div>
   </section>
 
+  <!-- TICKER -->
+  <div class="ticker" role="presentation">
+    <div class="ticker-track">
+      <span class="ticker-item">PRECISION FADES <span class="ticker-dot"></span></span>
+      <span class="ticker-item">STRAIGHT-RAZOR SHAVES <span class="ticker-dot"></span></span>
+      <span class="ticker-item">CUSTOM DESIGNS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">BEARD WORK <span class="ticker-dot"></span></span>
+      <span class="ticker-item">VIP SESSIONS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">PRECISION FADES <span class="ticker-dot"></span></span>
+      <span class="ticker-item">STRAIGHT-RAZOR SHAVES <span class="ticker-dot"></span></span>
+      <span class="ticker-item">CUSTOM DESIGNS <span class="ticker-dot"></span></span>
+      <span class="ticker-item">BEARD WORK <span class="ticker-dot"></span></span>
+      <span class="ticker-item">VIP SESSIONS <span class="ticker-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
   <section class="services" id="services">
-    <h2>Our Services</h2>
-    <p class="section-subtitle">Expertly crafted cuts and experiences</p>
+    <div class="section-eyebrow">
+      <div class="section-eyebrow-line"></div>
+      <span class="section-eyebrow-text">What We Offer</span>
+    </div>
+    <h2 class="section-title">The Menu</h2>
+
     <div class="services-grid">
       <div class="service-card">
-        <div class="service-icon">✂️</div>
-        <h3>Classic Fade</h3>
-        <p>Precision fades with sharp lines. Modern cuts that define the craft of barbering.</p>
+        <span class="service-number">01</span>
+        <h3 class="service-name">Precision Fade</h3>
+        <p class="service-desc">Clean taper, skin fade, or drop fade. Blended to perfection with your head shape and hair type.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">💈</div>
-        <h3>Hot Shave</h3>
-        <p>Traditional straight razor shaves. The ultimate luxury barbering experience.</p>
+        <span class="service-number">02</span>
+        <h3 class="service-name">Classic Cut</h3>
+        <p class="service-desc">Scissor or clipper cut, styled exactly how you want. Wash, cut, and finish included.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">🎯</div>
-        <h3>Custom Design</h3>
-        <p>Bespoke line designs and patterns. Turn your vision into blade work.</p>
+        <span class="service-number">03</span>
+        <h3 class="service-name">Straight Razor Shave</h3>
+        <p class="service-desc">Hot towel, pre-shave oil, and a straight razor. The old way is the best way.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">👨</div>
-        <h3>Beard Sculpting</h3>
-        <p>Full beard grooming and shaping. Sharp, distinguished, impeccable.</p>
+        <span class="service-number">04</span>
+        <h3 class="service-name">Beard Sculpting</h3>
+        <p class="service-desc">Full beard grooming and shaping. Sharp, distinguished, and impeccable lines.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">💇</div>
-        <h3>Color Service</h3>
-        <p>Professional color and highlights. Premium results, every time.</p>
+        <span class="service-number">05</span>
+        <h3 class="service-name">Custom Design</h3>
+        <p class="service-desc">Bespoke line designs and patterns. Turn your vision into blade work.</p>
       </div>
+
       <div class="service-card">
-        <div class="service-icon">🌟</div>
-        <h3>VIP Session</h3>
-        <p>Private appointment. Undivided attention. Luxury-level service.</p>
+        <span class="service-number">06</span>
+        <h3 class="service-name">VIP Session</h3>
+        <p class="service-desc">Private appointment. Undivided attention. Luxury-level service and results.</p>
       </div>
     </div>
   </section>
 
+  <!-- PORTFOLIO -->
   <section class="portfolio" id="portfolio">
-    <h2>Our Work</h2>
-    <p class="section-subtitle">Precision cuts that speak for themselves</p>
+    <div class="section-eyebrow">
+      <div class="section-eyebrow-line"></div>
+      <span class="section-eyebrow-text">Portfolio</span>
+    </div>
+    <h2 class="section-title">Our Work</h2>
+
     <div class="portfolio-grid">
       <div class="portfolio-item">
         <img src="images/cut-1.jpg" alt="Fresh fade cut">
@@ -563,46 +806,122 @@
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section class="about" id="about">
-    <div class="about-content">
-      <h2>Built on Legacy</h2>
-      <p>Legacy Barbershop honors the tradition of fine barbering while embracing contemporary style. Every cut is executed with precision. Every client leaves looking sharp.</p>
-      <p>We don't just cut hair. We craft experiences.</p>
-      <div class="about-quote">
-        "Excellence isn't an act, it's a habit. We make quality our standard."
+    <div class="about-inner">
+      <div class="about-left">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">The Vibe</span>
+        </div>
+        <h2 class="section-title">Built on Legacy</h2>
+        <p class="about-body">
+          Legacy Barbershop honors the tradition of fine barbering while embracing contemporary style. Every cut is executed with precision. Every client leaves looking sharp.
+        </p>
+        <p class="about-body">
+          We don't just cut hair. We craft experiences.
+        </p>
+        <p class="about-highlight">
+          "Excellence isn't an act, it's a habit. We make quality our standard."
+        </p>
+      </div>
+
+      <div class="about-right">
+        <div class="stat-card">
+          <div class="stat-number">5★</div>
+          <div class="stat-label">
+            <strong>Top-Rated</strong>
+            Premium service quality consistent across all clients
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">
+            <strong>Custom Work</strong>
+            Every cut tailored to your unique style and vision
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">SA</div>
+          <div class="stat-label">
+            <strong>Santa Ana Local</strong>
+            Serving the community with pride and precision
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section class="contact" id="contact">
-    <h2>Get In Touch</h2>
-    <p class="section-subtitle">Book your appointment today</p>
-    <div class="contact-grid">
-      <div class="contact-card">
-        <h3>📞 Call</h3>
-        <p>Direct line</p>
-        <a href="tel:+17143768318">(714) 376-8318</a>
+    <div class="contact-inner">
+      <div>
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">Get In Touch</span>
+        </div>
+        <h2 class="section-title">Book Your Seat</h2>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.55 3.52 2 2 0 0 1 3.53 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.51a16 16 0 0 0 6.29 6.29l.87-.87a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <a href="tel:+17143768318" class="contact-item-value">(714) 376-8318</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Location</div>
+              <a href="https://maps.google.com/?q=Santa+Ana+CA" target="_blank" rel="noopener" class="contact-item-value">
+                Santa Ana, CA
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Instagram</div>
+              <a href="https://instagram.com/legacybarbershopsantaana" target="_blank" rel="noopener" class="contact-item-value">@legacybarbershopsantaana</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="contact-card">
-        <h3>📍 Location</h3>
-        <p>Santa Ana, CA</p>
-        <a href="https://maps.google.com" target="_blank">Get Directions</a>
-      </div>
-      <div class="contact-card">
-        <h3>📱 Instagram</h3>
-        <p>Latest work & updates</p>
-        <a href="https://instagram.com/legacybarbershopsantaana" target="_blank">@legacybarbershopsantaana</a>
+
+      <div class="contact-map">
+        <div class="map-placeholder">
+          <svg class="map-placeholder-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="map-address">Santa Ana, CA</div>
+          <div class="map-city">Pacific Coast Barbering District</div>
+          <a href="https://maps.google.com/?q=Santa+Ana+CA" target="_blank" rel="noopener" class="map-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Get Directions
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    <p>Legacy Barbershop © 2026 • Santa Ana, California</p>
-    <p>Premium Craft Barbering</p>
-    <p>
-      <a href="https://instagram.com/legacybarbershopsantaana">Instagram</a> •
-      <a href="tel:+17143768318">Phone</a>
-    </p>
+    <div class="footer-logo">LEGACY <span class="highlight">CUTS</span></div>
+    <p class="footer-copy">© 2026 Legacy Barbershop · Santa Ana, CA</p>
   </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
 </body>
 </html>
